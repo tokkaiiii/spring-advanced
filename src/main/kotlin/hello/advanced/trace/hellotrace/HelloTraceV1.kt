@@ -27,31 +27,35 @@ class HelloTraceV1(
         complete(status, null)
     }
 
-    fun exception(status: TraceStatus, e: Exception) {
+    fun exception(status: TraceStatus?, e: Exception) {
         complete(status, e)
     }
 
-    private fun complete(status: TraceStatus, e: Exception?) {
+    private fun complete(status: TraceStatus?, e: Exception?) {
         val stopTimeMs = System.currentTimeMillis()
-        val resultTimeMs = stopTimeMs - status.startTimeMs
-        val traceId = status.traceId
+        val resultTimeMs = stopTimeMs - (status?.startTimeMs ?:0 )
+        val traceId = status?.traceId
         if (e == null) {
-            log.info(
-                "[{}] {}{} time={}ms",
-                traceId.id,
-                addSpace(COMPLETE_PREFIX, traceId.level),
-                status.message,
-                resultTimeMs
-            )
+            if (traceId != null) {
+                log.info(
+                    "[{}] {}{} time={}ms",
+                    traceId.id,
+                    addSpace(COMPLETE_PREFIX, traceId.level),
+                    status.message,
+                    resultTimeMs
+                )
+            }
         } else {
-            log.info(
-                "[{}] {}{} time={}ms ex={}",
-                traceId.id,
-                addSpace(EX_PREFIX, traceId.level),
-                status.message,
-                resultTimeMs,
-                e.toString()
-            )
+            if (traceId != null) {
+                log.info(
+                    "[{}] {}{} time={}ms ex={}",
+                    traceId.id,
+                    addSpace(EX_PREFIX, traceId.level),
+                    status.message,
+                    resultTimeMs,
+                    e.toString()
+                )
+            }
         }
     }
 
