@@ -15,7 +15,7 @@ class HelloTraceV1(
     fun begin(message: String): TraceStatus {
         val traceId = TraceId()
         val startTimeMs = System.currentTimeMillis()
-        log.info("[{}] {}{}", traceId.id, addSpace(START_PREFIX, traceId.level), message)
+        log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message)
         return TraceStatus(
             traceId = traceId,
             startTimeMs = startTimeMs,
@@ -39,8 +39,8 @@ class HelloTraceV1(
             if (traceId != null) {
                 log.info(
                     "[{}] {}{} time={}ms",
-                    traceId.id,
-                    addSpace(COMPLETE_PREFIX, traceId.level),
+                    traceId.getId(),
+                    addSpace(COMPLETE_PREFIX, traceId.getLevel()),
                     status.message,
                     resultTimeMs
                 )
@@ -49,8 +49,8 @@ class HelloTraceV1(
             if (traceId != null) {
                 log.info(
                     "[{}] {}{} time={}ms ex={}",
-                    traceId.id,
-                    addSpace(EX_PREFIX, traceId.level),
+                    traceId.getId(),
+                    addSpace(EX_PREFIX, traceId.getLevel()),
                     status.message,
                     resultTimeMs,
                     e.toString()
