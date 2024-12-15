@@ -1,0 +1,26 @@
+package hello.advanced.trace.hellotrace
+
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+
+@SpringBootTest
+class HelloTraceV1Test{
+
+    @Test
+    fun begin_end(){
+        val trace = HelloTraceV1()
+        val status = trace.begin("hello")
+        trace.end(status)
+    }
+
+    @Test
+    fun begin_exception(){
+        val trace = HelloTraceV1()
+        val status = trace.begin("hello")
+        trace.exception(status,IllegalStateException())
+
+    }
+
+
+}
