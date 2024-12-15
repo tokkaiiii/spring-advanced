@@ -24,8 +24,8 @@ class FieldLogTrace(
         val startTimeMs = System.currentTimeMillis()
         log.info(
             "[{}] {}{}",
-            traceId.id,
-            addSpace(START_PREFIX, traceId.level),
+            traceId.getId(),
+            addSpace(START_PREFIX, traceId.getLevel()),
             message
         )
         return TraceStatus(
@@ -51,8 +51,8 @@ class FieldLogTrace(
             if (traceId != null) {
                 log.info(
                     "[{}] {}{} time={}ms",
-                    traceId.id,
-                    addSpace(COMPLETE_PREFIX, traceId.level),
+                    traceId.getId(),
+                    addSpace(COMPLETE_PREFIX, traceId.getLevel()),
                     status.message,
                     resultTimeMs
                 )
@@ -61,8 +61,8 @@ class FieldLogTrace(
             if (traceId != null) {
                 log.info(
                     "[{}] {}{} time={}ms ex={}",
-                    traceId.id,
-                    addSpace(EX_PREFIX, traceId.level),
+                    traceId.getId(),
+                    addSpace(EX_PREFIX, traceId.getLevel()),
                     status.message,
                     resultTimeMs,
                     e.toString()

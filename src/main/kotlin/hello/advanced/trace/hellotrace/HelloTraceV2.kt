@@ -15,7 +15,7 @@ class HelloTraceV2(
     fun begin(message: String): TraceStatus {
         val traceId = TraceId()
         val startTimeMs = System.currentTimeMillis()
-        log.info("[{}] {}{}", traceId.id, addSpace(START_PREFIX, traceId.level), message)
+        log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message)
         return TraceStatus(
             traceId = traceId,
             startTimeMs = startTimeMs,
@@ -27,7 +27,7 @@ class HelloTraceV2(
     fun beginSync(beforeTraceId: TraceId, message: String): TraceStatus {
         val nextId = beforeTraceId.createNextId()
         val startTimeMs = System.currentTimeMillis()
-        log.info("[{}] {}{}", nextId.id, addSpace(START_PREFIX, nextId.level), message)
+        log.info("[{}] {}{}", nextId.getId(), addSpace(START_PREFIX, nextId.getLevel()), message)
         return TraceStatus(
             traceId = nextId,
             startTimeMs = startTimeMs,
@@ -51,8 +51,8 @@ class HelloTraceV2(
             if (traceId != null) {
                 log.info(
                     "[{}] {}{} time={}ms",
-                    traceId.id,
-                    addSpace(COMPLETE_PREFIX, traceId.level),
+                    traceId.getId(),
+                    addSpace(COMPLETE_PREFIX, traceId.getLevel()),
                     status.message,
                     resultTimeMs
                 )
@@ -61,8 +61,8 @@ class HelloTraceV2(
             if (traceId != null) {
                 log.info(
                     "[{}] {}{} time={}ms ex={}",
-                    traceId.id,
-                    addSpace(EX_PREFIX, traceId.level),
+                    traceId.getId(),
+                    addSpace(EX_PREFIX, traceId.getLevel()),
                     status.message,
                     resultTimeMs,
                     e.toString()
