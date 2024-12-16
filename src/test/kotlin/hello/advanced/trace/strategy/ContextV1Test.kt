@@ -1,6 +1,7 @@
 package hello.advanced.trace.strategy
 
 import hello.advanced.trace.strategy.code.strategy.ContextV1
+import hello.advanced.trace.strategy.code.strategy.Strategy
 import hello.advanced.trace.strategy.code.strategy.StrategyLogic1
 import hello.advanced.trace.strategy.code.strategy.StrategyLogic2
 import hello.advanced.util.logger
@@ -16,7 +17,7 @@ class ContextV1Test {
         logic2()
     }
 
-    private fun logic1(){
+    private fun logic1() {
         val startTime = System.currentTimeMillis()
         // 비즈니스 로직 실행
         log.info("비즈니스 로직1 실행")
@@ -26,7 +27,7 @@ class ContextV1Test {
         log.info("resultTime=$resultTime")
     }
 
-    private fun logic2(){
+    private fun logic2() {
         val startTime = System.currentTimeMillis()
         // 비즈니스 로직 실행
         log.info("비즈니스 로직2 실행")
@@ -40,7 +41,7 @@ class ContextV1Test {
      * 전략 패턴 사용
      */
     @Test
-    fun strategyV1(){
+    fun strategyV1() {
         val strategyLogic1 = StrategyLogic1()
         val context1 = ContextV1(strategyLogic1)
         context1.execute()
@@ -48,6 +49,35 @@ class ContextV1Test {
         val strategyLogic2 = StrategyLogic2()
         val context2 = ContextV1(strategyLogic2)
         context2.execute()
+    }
+
+    @Test
+    fun strategyV2() {
+        object : Strategy {
+            override fun call() {
+                log.info("비즈니스 로직1 실행")
+            }
+        }.also { ContextV1(it).execute() }
+
+        object : Strategy {
+            override fun call() {
+                log.info("비즈니스 로직2 실행")
+            }
+        }.also { ContextV1(it).execute() }
+    }
+
+    @Test
+    fun strategyV3() {
+        ContextV1(object : Strategy {
+            override fun call() {
+                log.info("비즈니스 로직1 실행")
+            }
+        }).execute()
+        ContextV1(object : Strategy {
+            override fun call() {
+                log.info("비즈니스 로직2 실행")
+            }
+        }).execute()
     }
 
 }
