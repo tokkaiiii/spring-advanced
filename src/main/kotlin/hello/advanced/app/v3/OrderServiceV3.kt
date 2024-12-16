@@ -14,7 +14,7 @@ class OrderServiceV3(
         var status: TraceStatus? = null
         try {
             status = trace.begin("OrderService.orderItem()")
-            orderRepository.save(status.traceId,itemId)
+            orderRepository.save(itemId)
             trace.end(status)
         } catch (e: Exception) {
             trace.exception(status, e)

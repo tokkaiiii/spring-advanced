@@ -10,7 +10,7 @@ import java.lang.Thread.sleep
 class OrderRepositoryV3(
     private val trace: LogTrace
 ) {
-    fun save(traceId: TraceId, itemId: String) {
+    fun save(itemId: String) {
         var status: TraceStatus? = null
         try {
             status = trace.begin(" OrderRepository.save()")
