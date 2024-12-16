@@ -47,4 +47,22 @@ class TemplateMethodTest {
         template2.execute()
     }
 
+    @Test
+    fun templateMethodV2(){
+        val template1 = object : AbstractTemplate(){
+            override fun call() {
+                log.info("비즈니스 로직1 실행")
+            }
+        }
+        log.info("클래스 이름1=${template1.javaClass.name}")
+        template1.execute()
+        val template2 = object : AbstractTemplate(){
+            override fun call() {
+                log.info("비즈니스 로직2 실행")
+            }
+        }
+        log.info("클래스 이름2=${template2.javaClass.name}")
+        template2.execute()
+    }
+
 }
